@@ -1,0 +1,26 @@
+name: Deploy to AWS S3
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow when pushing to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4  # Checkout the code from the repository
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}  # Use your AWS Access Key
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  # Use your AWS Secret Key
+        aws-region: us-east-1  # Change to the appropriate AWS region if needed
+
+    - name: Deploy to S3
+      run: |
+        aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }}  # Sync files to the S3 bucket
+
