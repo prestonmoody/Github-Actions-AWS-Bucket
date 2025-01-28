@@ -10,4 +10,4 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v2
     - name: Print Environment Variable
-      run: echo $TEST_VAR:
+      run: echo $TEST_VAR
